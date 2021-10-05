@@ -114,7 +114,6 @@ function scrollToSection(element) {
 
 (function addSections(num = 4) {
   for (let i = 1; i <= num; i++) {
-    console.log(i);
     addSection(
       `section${i}`,
       `<p>
