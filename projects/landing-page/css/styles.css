@@ -52,8 +52,8 @@ main {
   margin: 10vh 1em 10vh;
 }
 
-.main-hero {
-  min-height: 40vh;
+.main__hero {
+  min-height: 77vh;
   padding-top: 3em;
 }
 
@@ -65,14 +65,10 @@ section {
 /* ---- Module Rules ---- */
 
 /* Navigation Styles*/
-.navbar__menu ul {
-  padding-left: 0;
+.navbar__menu > div {
   margin: 0;
-  text-align: right;
-}
-
-.navbar__menu li {
-  display: inline-block;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .navbar__menu .menu__link {
@@ -203,8 +199,8 @@ section:nth-of-type(3n + 1) .landing__container::after {
 
 /* ---- Theme State Rules ---- */
 /* Section Active Styles */
-/* Note: your-active-class class is applied through javascript. You should update the class here and in the index.html to what you set in your javascript file.  */
-section.your-active-class {
+/* Note: active class is applied through javascript. You should update the class here and in the index.html to what you set in your javascript file.  */
+section.active {
   background: rgb(0, 0, 0);
   background: linear-gradient(
     0deg,
@@ -213,12 +209,12 @@ section.your-active-class {
   );
 }
 
-section.your-active-class .landing__container::before {
+section.active .landing__container::before {
   opacity: 1;
   animation: rotate 4s linear 0s infinite forwards;
 }
 
-section.your-active-class .landing__container::after {
+section.active .landing__container::after {
   opacity: 1;
   animation: rotate 5s linear 0s infinite forwards reverse;
 }
