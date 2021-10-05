@@ -82,14 +82,15 @@ function setActive(element) {
 
 // Add class 'active' to section when near top of viewport
 function isInViewport(
-  currElement = sectionsOffsets[0],
-  nextElement = document.body.offsetHeight
+  currElementOffset,
+  nextElementOffset,
+  currElementId
 ) {
   if (
-    window.scrollY >= currElement.offset &&
-    window.scrollY < nextElement.offset
+    window.scrollY >= currElementOffset &&
+    window.scrollY < nextElementOffset
   ) {
-    setActive(document.getElementById(currElement.id));
+    setActive(document.getElementById(currElementId));
   }
 }
 
@@ -126,8 +127,18 @@ function scrollToSection(element) {
 // Set sections as active on scroll
 window.addEventListener("scroll", function (e) {
   for (let i = 0; i < sectionsOffsets.length; i++) {
-    if (i < sectionsOffsets.length) {
-      isInViewport(sectionsOffsets[i], sectionsOffsets[i + 1]);
+    if (i+1 < sectionsOffsets.length) {
+      isInViewport(
+        sectionsOffsets[i].offset,
+        sectionsOffsets[i + 1].offset,
+        sectionsOffsets[i].id
+      );
+    } else {
+      isInViewport(
+        sectionsOffsets[i].offset,
+        document.body.offsetHeight,
+        sectionsOffsets[i].id
+      );
     }
   }
 });
