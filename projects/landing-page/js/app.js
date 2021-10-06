@@ -20,6 +20,7 @@
 const activeClass = "active";
 let sectionName, sectionContent;
 let sectionsOffsets = [];
+let em = 16; //pixels
 let navbarList = document.getElementById("navbar__list");
 let main = document.querySelector("main");
 
@@ -59,8 +60,8 @@ function addSection(sectionName, sectionContent) {
   `;
 
   sectionsOffsets.push({
-    id: sectionName,
-    offset: document.getElementById(sectionName).offsetTop,
+    offset: document.getElementById(sectionName).offsetTop-(4*em),
+    id: sectionName
   });
 
   document.querySelectorAll(".menu__link").forEach((link) => {
@@ -123,8 +124,20 @@ function scrollToSection(element) {
   }
 })();
 
+
+window.addEventListener("resize", function() {
+  sectionsOffsets = [];
+  for (section of document.querySelectorAll('section')) {
+    sectionsOffsets.push({
+      offset: section.offsetTop-(4*em),
+      id: section.getAttribute('id')
+    });
+  }
+});
+
 // Set sections as active on scroll
-window.addEventListener("scroll", function (e) {
+window.addEventListener("scroll", function() {
+  
   for (let i = 0; i < sectionsOffsets.length; i++) {
     if (i+1 < sectionsOffsets.length) {
       isInViewport(
