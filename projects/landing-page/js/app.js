@@ -36,6 +36,34 @@ function capitalize(text) {
   return text;
 }
 
+function isMobile() {
+  if (window.innerWidth < 768) {
+    document.querySelector("nav").innerHTML = `
+      <div class="dropdown">
+        <button class="dropbtn">Sections</button>
+        <div id="navbar__list" class="dropdown-content">
+          ${navbarList.innerHTML}
+        </div>
+      </div>
+    `;
+  } else {
+    document.querySelector("nav").innerHTML = `
+      <div id="navbar__list">
+        ${navbarList.innerHTML}
+      </div>
+    `;
+  }
+
+  document.querySelectorAll(".menu__link").forEach((link) => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      scrollToSection(
+        document.getElementById(link.getAttribute("href").slice(1))
+      );
+    });
+  });
+};
+
 /**
  * End Helper Functions
  * Begin Main Functions
@@ -64,14 +92,7 @@ function addSection(sectionName, sectionContent) {
     id: sectionName
   });
 
-  document.querySelectorAll(".menu__link").forEach((link) => {
-    link.addEventListener("click", (e) => {
-      e.preventDefault();
-      scrollToSection(
-        document.getElementById(link.getAttribute("href").slice(1))
-      );
-    });
-  });
+  isMobile();
 }
 
 function setActive(element) {
@@ -126,6 +147,8 @@ function scrollToSection(element) {
 
 
 window.addEventListener("resize", function() {
+  isMobile();
+
   sectionsOffsets = [];
   for (section of document.querySelectorAll('section')) {
     sectionsOffsets.push({
