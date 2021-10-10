@@ -41,28 +41,25 @@ function isMobile() {
     document.querySelector("nav").innerHTML = `
       <div class="dropdown">
         <button class="dropbtn">Sections</button>
-        <div id="navbar__list" class="dropdown-content">
+        <ul id="navbar__list" class="dropdown-content">
           ${navbarList.innerHTML}
-        </div>
+        </ul>
       </div>
     `;
   } else {
     document.querySelector("nav").innerHTML = `
-      <div id="navbar__list">
+      <ul id="navbar__list">
         ${navbarList.innerHTML}
-      </div>
+      </ul>
     `;
   }
 
   document.querySelectorAll(".menu__link").forEach((link) => {
     link.addEventListener("click", (e) => {
-      e.preventDefault();
-      scrollToSection(
-        document.getElementById(link.getAttribute("href").slice(1))
-      );
+      scrollToSection(document.getElementById(link.dataset.section));
     });
   });
-};
+}
 
 /**
  * End Helper Functions
@@ -73,9 +70,9 @@ function isMobile() {
 // build the nav
 function addSection(sectionName, sectionContent) {
   navbarList.innerHTML += `
-    <a class="menu__link" href="#${sectionName}">
+    <li class="menu__link" data-section="${sectionName}">
       ${capitalize(sectionName)}
-    </a>
+    </li>
   `;
 
   main.innerHTML += `
@@ -88,8 +85,8 @@ function addSection(sectionName, sectionContent) {
   `;
 
   sectionsOffsets.push({
-    offset: document.getElementById(sectionName).offsetTop-(4*em),
-    id: sectionName
+    offset: document.getElementById(sectionName).offsetTop - 4 * em,
+    id: sectionName,
   });
 
   isMobile();
@@ -103,16 +100,20 @@ function setActive(element) {
 }
 
 // Add class 'active' to section when near top of viewport
-function isInViewport(
-  currElementOffset,
-  nextElementOffset,
-  currElementId
-) {
+function isInViewport(currElementOffset, nextElementOffset, currElementId) {
   if (
     window.scrollY >= currElementOffset &&
     window.scrollY < nextElementOffset
   ) {
     setActive(document.getElementById(currElementId));
+    setActive(document.querySelector(`li[data-section='${currElementId}']`));
+  }
+
+  if (window.scrollY < sectionsOffsets[0].offset) {
+    document.querySelector("section:first-of-type").classList.remove("active");
+    document
+      .querySelector("li[data-section]:first-of-type")
+      .classList.remove("active");
   }
 }
 
@@ -145,24 +146,22 @@ function scrollToSection(element) {
   }
 })();
 
-
-window.addEventListener("resize", function() {
+window.addEventListener("resize", function () {
   isMobile();
 
   sectionsOffsets = [];
-  for (section of document.querySelectorAll('section')) {
+  for (section of document.querySelectorAll("section")) {
     sectionsOffsets.push({
-      offset: section.offsetTop-(4*em),
-      id: section.getAttribute('id')
+      offset: section.offsetTop - 4 * em,
+      id: section.getAttribute("id"),
     });
   }
 });
 
 // Set sections as active on scroll
-window.addEventListener("scroll", function() {
-  
+window.addEventListener("scroll", function () {
   for (let i = 0; i < sectionsOffsets.length; i++) {
-    if (i+1 < sectionsOffsets.length) {
+    if (i + 1 < sectionsOffsets.length) {
       isInViewport(
         sectionsOffsets[i].offset,
         sectionsOffsets[i + 1].offset,

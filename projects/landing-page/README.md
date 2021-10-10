@@ -2,12 +2,17 @@
 
 ## Table of Contents
 
-* [Instructions](#instructions)
+- [Landing Page Project](#landing-page-project)
+  - [Table of Contents](#table-of-contents)
+  - [Description](#description)
+  - [Features](#features)
 
-## Instructions
+## Description
+  - First project in my **FWD Prof Track**
+  - Landing page that dynamically generate sections and nav links usign javascript
 
-The starter project has some HTML and CSS styling to display a static version of the Landing Page project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
+## Features
+  - Responsive design
+  - Indecation of current reading section in navigation links and section
+  - Smooth scrolling
 
-To get started, open `js/app.js` and start building out the app's functionality
-
-For specific, detailed instructions, look at the project instructions in the Udacity Classroom.
